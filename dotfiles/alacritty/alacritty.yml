@@ -1,0 +1,67 @@
+import:
+  - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
+
+env:
+  TERM: xterm-256color
+
+window:
+  opacity: 0.9
+  padding:
+    x: 5
+    y: 5
+  decorations: buttonless
+
+live_config_reload: true
+scrolling:
+    history: 1000
+    multiplier: 10
+selection:
+    semantic_escape_chars: '|:"'' {}()[]<>'
+    save_to_clipboard: true
+
+font:
+  normal:
+    family: "3270 Nerd Font"
+    style: Regular
+  bold:
+    family: "3270 Nerd Font"
+    style: Bold
+  italic:
+    family: "3270 Nerd Font"
+    style: Italic
+  bold_italic:
+    family: "3270 Nerd Font"
+    style: Bold Italic
+  size: 17.0
+  # use_thin_strokes: true
+
+draw_bold_text_with_bright_colors: true
+
+cursor:
+  style: Block
+  unfocused_hollow: true
+
+key_bindings:
+
+  - { key: K,              mods: Command, mode: ~Vi|~Search, chars: "\x0c"                 }
+  - { key: K,              mods: Command, mode: ~Vi|~Search, action: ClearHistory          }
+  - { key: Key0,           mods: Command,                    action: ResetFontSize         }
+  - { key: Equals,         mods: Command,                    action: IncreaseFontSize      }
+  - { key: Plus,           mods: Command,                    action: IncreaseFontSize      }
+  - { key: NumpadAdd,      mods: Command,                    action: IncreaseFontSize      }
+  - { key: Minus,          mods: Command,                    action: DecreaseFontSize      }
+  - { key: NumpadSubtract, mods: Command,                    action: DecreaseFontSize      }
+  - { key: V,              mods: Command,                    action: Paste                 }
+  - { key: C,              mods: Command,                    action: Copy                  }
+  - { key: C,              mods: Command, mode: Vi|~Search,  action: ClearSelection        }
+  - { key: H,              mods: Command,                    action: Hide                  }
+  - { key: H,              mods: Command|Alt,                action: HideOtherApplications }
+  - { key: M,              mods: Command,                    action: Minimize              }
+  - { key: Q,              mods: Command,                    action: Quit                  }
+  - { key: W,              mods: Command,                    action: Quit                  }
+  - { key: N,              mods: Command,                    action: CreateNewWindow       }
+  - { key: F,              mods: Command|Control,            action: ToggleFullscreen      }
+  - { key: F,              mods: Command, mode: ~Search,     action: SearchForward         }
+  - { key: B,              mods: Command, mode: ~Search,     action: SearchBackward        }
+  - { key: A,              mods: Command,                    chars: "\x01"                 }
+
