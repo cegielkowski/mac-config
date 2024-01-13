@@ -10,6 +10,13 @@ scripts=(
     bash_config.sh
 )
 
+# Check if Homebrew is installed
+if ! command -v brew &>/dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+brew install gum
+
 # Execute each script
 for script in "${scripts[@]}"; do
     chmod +x $script
