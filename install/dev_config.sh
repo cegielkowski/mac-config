@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Start message
-gum style --border rounded --padding 1 "🚀 Starting to set up your dev environment..."
+gum style --border rounded --padding 2 "🚀 Starting to set up your dev environment..."
 
 # Update Homebrew
 gum spin --title "🔄 Updating Homebrew..." -- brew update
 
-gum style --border double --padding 1 "🛠️ Installing dev tools..."
+gum style --border double --padding 2 "🛠️ Installing dev tools..."
 
 # List of dev tools to install
 devtools=(
@@ -15,11 +15,24 @@ devtools=(
     python3
     pnpm
     bun
+    nvm
 )
 
 # Install dev tools
 for tool in "${devtools[@]}"; do
-    gum spin --title "Installing $tool..." -- brew install --cask $tool
+    echo "📥 Installing $tool..."
+    echo " "
+
+    # Determine if the tool should be installed as a cask or not
+    if [[ "$tool" == "dotnet-sdk" || "$tool" == "bun" || "$tool" == "nvm" ]]; then
+        brew install --cask "$tool"
+    else
+        brew install "$tool"
+    fi
+    
+    echo " "
+    echo "✅ Finished installing $tool."
+    echo " "
 done
 
 # Check if Docker is installed

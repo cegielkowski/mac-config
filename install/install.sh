@@ -15,10 +15,16 @@ if ! command -v brew &>/dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+# Install gum using Homebrew
 brew install gum
 
-# Execute each script
+# Execute each script with confirmation
 for script in "${scripts[@]}"; do
-    chmod +x $script
-    ./$script
+    # Ask for confirmation before running the script
+    if gum confirm "Do you want to run $script?"; then
+        chmod +x "$script"
+        ./"$script"
+    else
+        echo "Skipping $script"
+    fi
 done

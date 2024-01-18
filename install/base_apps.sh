@@ -52,13 +52,9 @@ apps=(
   cakebrew
   elmedia-player
   raycast
-  onedrive
   slack
   whatsapp
   spotify
-  microsoft-word
-  microsoft-powerpoint
-  microsoft-excel
   notion
   firefox
   google-chrome
@@ -71,7 +67,7 @@ apps=(
   rider
   visual-studio-code
   azure-data-studio
-  fig
+  microsoft-office
 )
 
 app_selection() {
@@ -102,7 +98,7 @@ app_selection() {
   elif [ "$user_choice" = "Choose Manually" ]; then
     # Allow user to manually select apps
     formatted_apps=("${apps[@]}")
-    selected_apps=$(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " --no-limit -- "${formatted_apps[@]}" | awk '{print $1}')
+    selected_apps=($(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " --no-limit -- "${formatted_apps[@]}" | awk '{print $1}'))
   fi
 }
 
@@ -120,14 +116,21 @@ if [ ${#selected_apps[@]} -gt 0 ]; then
   echo -e "Selected Apps\n$apps_output" | gum style --border double --margin 1 --padding 1
 
   if gum confirm "💡 Do you want to proceed with the installation?"; then
-    for app in "${selected_apps[@]}"; do
-      if [ "$(is_installed "$app")" = "Not Installed" ]; then
-        gum spin --title "📥 Installing $app..." -- brew install --cask "$app"
-      fi
-    done
-    gum style --border double --border-foreground "green" --margin "1" --padding "1" "✅ Setup completed!"
+      for app in "${selected_apps[@]}"; do
+          if [ "$(is_installed "$app")" = "Not Installed" ]; then
+              echo "📥 Installing $app..."
+              echo " "
+
+              brew install --cask "$app"
+
+              echo " "
+              echo "✅ Finished installing $app."
+              echo " "
+          fi
+      done
+      gum style --border double --border-foreground "green" --margin "1" --padding "1" "✅ Setup completed!"
   else
-    gum style --border rounded --border-foreground "orange" --padding "1" "❌ Installation cancelled."
+      gum style --border rounded --border-foreground "orange" --padding "1" "❌ Installation cancelled."
   fi
 else
   gum style --border rounded --border-foreground "orange" --padding "1" "❌ No apps selected for installation."

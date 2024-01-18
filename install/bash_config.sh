@@ -4,10 +4,15 @@
 gum style --border rounded --padding 1 "🚀 Starting Dotfiles Setup..."
 
 export DOTFILES="$HOME/.dotfiles"
-components=(tmux others)
+components=(alacritty starship tmux others zsh)
+
+# Display components to be installed in a rectangle
+components_text=$(printf "✨ %s\n" "${components[@]}")
+gum style --border double --border-foreground "cyan" --margin 1 --padding 1 --foreground "blue" "Components to be installed: $components_text"
 
 for component in "${components[@]}"; do
-  cd "$DOTFILES/$component" || exit
+  component_dir="$DOTFILES/$component"
+  cd "$component_dir" || exit
   chmod +x install.sh
 
   if which "$component" >/dev/null; then
@@ -18,19 +23,41 @@ for component in "${components[@]}"; do
     ./install.sh
   fi
 
-  if [ -f links.prop ]; then
-    while IFS="=" read -r -a link; do
-      if [ -e "$HOME/${link[1]}" ]; then
-        # Enhanced prompt for replacing files
-        gum confirm --affirmative "y" --negative "n" -- "$HOME/${link[1]} exists. Replace it?" && rm -f "$HOME/${link[1]}" || echo "Skipping linking of ${link[0]}."
+  link_prop_file="$component_dir/link.prop"
+  if [ -f "$link_prop_file" ]; then
+
+    # Read the single line from link.prop file
+    IFS="=" read -r source target < "$link_prop_file"
+    echo "Processing link for $source -> $target"
+    
+    source_path="${source//\$DOTFILES/$DOTFILES}"
+    target_path="${target//\$HOME/$HOME}"
+
+    if [ -e "$target_path" ] || [ -L "$target_path" ]; then
+      if gum confirm --affirmative "y" --negative "n" -- "$target_path exists. Replace it?"; then
+        rm -f "$target_path"
+        mkdir -p "$(dirname "$target_path")"
+        ln -s "$source_path" "$target_path"
+        gum style --border rounded --padding 1 -- "Linked $source_path to $target_path"
+      else
+        echo "Skipping linking of $source_path."
       fi
-      mkdir -p "$(dirname "$HOME/${link[1]}")"
-      ln -s "${link[0]}" "$HOME/${link[1]}"
-    done <links.prop
+    else
+      mkdir -p "$(dirname "$target_path")"
+      ln -s "$source_path" "$target_path"
+      gum style --border rounded --padding 1 -- "Linked $source_path to $target_path"
+    fi
+  else
+    echo "link.prop not found for $component"
   fi
 done
 
 cd "$HOME" || exit
+
+source "$HOME/.config/alacritty/alacritty.toml"
+source "$HOME/.config/starship.toml"
+tmux source-file "$HOME/.tmux.conf"
+source "$HOME/.zshrc"
 
 # End message
 gum style --border rounded --padding 1 "✅ Dotfiles Setup Complete!"
