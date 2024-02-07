@@ -74,6 +74,8 @@ apps=(
   authy
   google-drive
   grammarly
+  spotify
+  yt-music
 )
 
 app_selection() {
