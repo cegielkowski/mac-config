@@ -3,4 +3,4 @@ brew install z
 brew install bat
 brew install gh
 brew install tree
-brew install fig
+brew install --cask fig
