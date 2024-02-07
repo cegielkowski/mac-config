@@ -10,12 +10,11 @@ gum style --border double --padding 2 "🛠️ Installing dev tools..."
 
 # List of dev tools to install
 devtools=(
-    dotnet-sdk
     node
     python3
     pnpm
-    bun
     nvm
+    go
 )
 
 # Install dev tools
