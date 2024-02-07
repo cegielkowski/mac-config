@@ -15,6 +15,7 @@ devtools=(
     pnpm
     nvm
     go
+    neovim
 )
 
 # Install dev tools
