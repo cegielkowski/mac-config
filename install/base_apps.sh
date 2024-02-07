@@ -43,7 +43,6 @@ gum style --border double --border-foreground "cyan" --margin "1" --padding "1" 
 # List of apps to install
 apps=(
   surfshark
-  aldente
   caffeine
   cleanmymac
   hiddenbar
@@ -54,12 +53,27 @@ apps=(
   whatsapp
   notion
   google-chrome
+  brave-browser
+  arc
   docker
   jetbrains-toolbox
   webstorm
+  pycharm
+  goland
+  datagrip
   visual-studio-code
-  arc
+  sublime-text
+  mongodb-compass
   tunnelblick
+  zoom
+  microsoft-teams
+  skype
+  todoist
+  cyberduck
+  cocoapods
+  authy
+  google-drive
+  grammarly
 )
 
 app_selection() {
