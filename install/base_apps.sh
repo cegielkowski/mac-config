@@ -46,28 +46,20 @@ apps=(
   aldente
   caffeine
   cleanmymac
-  one-switch
-  cleanshot
   hiddenbar
   cakebrew
   elmedia-player
   raycast
   slack
   whatsapp
-  spotify
   notion
-  firefox
   google-chrome
-  opera
-  microsoft-edge
   docker
-  gitkraken
   jetbrains-toolbox
   webstorm
-  rider
   visual-studio-code
-  azure-data-studio
-  microsoft-office
+  arc
+  tunnelblick
 )
 
 app_selection() {
